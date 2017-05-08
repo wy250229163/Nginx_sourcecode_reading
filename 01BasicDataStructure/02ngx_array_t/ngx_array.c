@@ -14,12 +14,12 @@ ngx_array_create(ngx_pool_t *p, ngx_uint_t n, size_t size)
 {
     ngx_array_t *a;
 
-    a = ngx_palloc(p, sizeof(ngx_array_t));
+    a = ngx_palloc(p, sizeof(ngx_array_t)); //从p中取内存存array的信息头 
     if (a == NULL) {
         return NULL;
     }
 
-    a->elts = ngx_palloc(p, n * size);
+    a->elts = ngx_palloc(p, n * size); //从p中取内存存具体元素 
     if (a->elts == NULL) {
         return NULL;
     }
@@ -32,7 +32,7 @@ ngx_array_create(ngx_pool_t *p, ngx_uint_t n, size_t size)
     return a;
 }
 
-
+//这种内存管理不会调用free，只是移动指针，所以内存利用率高 
 void
 ngx_array_destroy(ngx_array_t *a)
 {
