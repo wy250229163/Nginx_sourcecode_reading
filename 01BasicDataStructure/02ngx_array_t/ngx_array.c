@@ -73,14 +73,14 @@ ngx_array_push(ngx_array_t *a)
              * and there is space for new allocation
              */
 
-            //这里可以看出，ngx对内存的把控，满了它都是只扩一个元素大小
+            //当前内存池剩余空间大于需要的新增空间时，只扩一个元素大小
             p->d.last += a->size;
             a->nalloc++;
 
         } else {
             /* allocate a new array */
-
-            new = ngx_palloc(p, 2 * size);
+			//内存池不够用，申请新的的 
+            new = ngx_palloc(p, 2 * size); //注意，这里的size大小已经是所有元素所占空间了，所以扩了2倍 
             if (new == NULL) {
                 return NULL;
             }
